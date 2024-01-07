@@ -1,6 +1,6 @@
 import React from "react";
 import mongoose from "mongoose";
-import User from "@/models/UserModel";
+import User from "@/app/models/UserModel";
 import { NextResponse } from "next/server";
 var CryptoJS = require("crypto-js");
 // const handler = async (req, res) =>{
@@ -19,7 +19,7 @@ export async function POST(req, res) {
   const payload = await req.json();
   await mongoose.connect(process.env.MONGODB_URI);
   const { username, ContactNumber, Address, Email } = payload;
-  let user = new User({ username, ContactNumber, Address, Email, Password: CryptoJS.AES.encrypt(payload.Password, "SecretKey").toString() });
+  let user = new User({ username, ContactNumber, Address, Email, Password: CryptoJS.AES.encrypt(payload.Password, process.env.CRYPTO_JS_KEY).toString() });
   const result = await user.save();
   return NextResponse.json({ result, success: true });
 }

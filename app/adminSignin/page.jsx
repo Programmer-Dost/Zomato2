@@ -10,9 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../Context/UserProvider";
 function LoginPage() {
-  const {login } = React.useContext(UserContext);
+  const {adminlogin } = React.useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({ username: "Username is required" });
+
   const [isChecked, setIsChecked] = useState({ checked: false });
   const [formData, setFormData] = useState({
     Email: "",
@@ -114,9 +115,9 @@ function LoginPage() {
 
     // Convert form data to JSON
     const jsonDataFinal = JSON.stringify(formData, null, 2);
-    // console.log("String form Data Final", jsonDataFinal);
+    console.log("String form Data Final", jsonDataFinal);
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("/api/admin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,13 +131,14 @@ function LoginPage() {
   const token = responseData.token;
 
   // Use the extracted token for further processing
-  // console.log("Token:", token);
+  console.log("Token:", token);
 //  const token =  response.cookies.get("token")
-        localStorage.setItem("token", token)
+        localStorage.setItem("adminToken", token)
         setSubmitted(true);
-        // console.log("Form data submitted successfully", formData);
-        login()
-
+        console.log("Form data submitted successfully", formData);
+   adminlogin()
+        // setAdminEmail(formData.Email)
+        
         toast.success("🎉 Signed In successfully! Redirecting 🤗", {
           position: "bottom-center",
           autoClose: 5000,
@@ -149,17 +151,16 @@ function LoginPage() {
         });
         setTimeout(() => {
 
-            router.push("/dishes");
+            router.push("/admin");
         }, 3000);
 
         setFormData({
           Email: "",
           Password: "",
         });
-        login();
       } else {
         console.error("Form submission failed");
-        toast.error("👹 User Not Found!", {
+        toast.error("👹 Admin Not Found!", {
           position: "bottom-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -182,7 +183,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center sm:mt-24 md:mt-36 mx-4 sm:mx-0 mb-32 sm:mb-0 ">
+    <div className="flex flex-col justify-center items-center mt-24 md:mt-36 mx-4">
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
@@ -212,7 +213,7 @@ function LoginPage() {
           onSubmit={handleSubmit}
           action="/api/signup"
           method="POST"
-          className="border border-purple-400 rounded-2xl px-8 pt-6 pb-8 mb-4 mx-8 text-sm"
+          className="border border-purple-400 rounded-2xl px-8 pt-6 pb-8 mb-4"
         >
           <div className="mb-6">
             <label
@@ -274,14 +275,14 @@ function LoginPage() {
               />
               <label
                 htmlFor="remember-me"
-                className="ml-2 text-xs sm:text-sm text-gray-700"
+                className="ml-2 text-sm text-gray-700"
               >
                 Remember me
               </label>
             </div>
             <Link
-              href="/account"
-              className="inline-block align-baseline font-bold text-xs ml-8 sm:ml-0 sm:text-sm text-blue-500 hover:text-blue-800"
+              href="/forgot-password"
+              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
             >
               Forgot Password?
             </Link>
@@ -300,12 +301,11 @@ function LoginPage() {
         <div className="text-center">
           <p className="text-gray-500 text-xs">
             {`Don't`} have an account?
-            <Link
-              href="/signup"
-              className="ml-1 text-blue-500 hover:text-blue-800"
+            <span
+              className="ml-1 text-blue-500"
             >
-              Sign Up
-            </Link>
+              Contact Developer
+            </span>
           </p>
         </div>
         <p className="text-center text-gray-500 text-xs">

@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import restaurantTypeData from "../add-restaurant/restaurantTypeData";
 import { useRouter } from 'next/router';
 import RestaurantVerification from "./RestaurantVerification";
+
 function RestaurantType({ activeStep , formData, setActiveStep, setFormData}) {
   // Create an array of states to track the clicked state for each container
+
   const [containerStates, setContainerStates] = useState(
     new Array(6).fill(false) // Assuming you have 6 containers, initialize all to false
   );
@@ -14,7 +16,7 @@ function RestaurantType({ activeStep , formData, setActiveStep, setFormData}) {
   const handleContainerClick = (index) => {
     // Create a copy of the containerStates array and toggle the state of the clicked container
     const updatedStates = [...containerStates];
-    updatedStates[index] = !updatedStates[index];
+    updatedStates[index] = !updatedStates[index];//WIll set that thing to true
     setContainerStates(updatedStates);
   };
   const [submitted, setSubmitted] = useState(false);
@@ -24,7 +26,7 @@ function RestaurantType({ activeStep , formData, setActiveStep, setFormData}) {
   // console.log(trueIndices);
 
   const filteredItems = trueIndices.map((index) => restaurantTypeData[index]);
-
+console.log(filteredItems)
 const handleSubmit=()=>{
   setActiveStep(3)
   setSubmitted(true);
@@ -78,12 +80,12 @@ const handleSubmit=()=>{
           <button  onClick={handleSubmit} class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
             Next ⏭
           </button>
-          {submitted && (
+          {/* {submitted && (
         <div>
           <p>Submitted successfully!</p>
           <button onClick={() => setSubmitted(false)}>Close</button>
         </div>
-      )}
+      )} */}
         </div>
       </section>
 

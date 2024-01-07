@@ -1,7 +1,7 @@
 import React from 'react'
 import mongoose from "mongoose";
 // import User from '@/models/UserModel';
-import Pastries from '@/models/PastriesModel';
+import Pastries from '@/app/models/PastriesModel';
 import { NextResponse } from "next/server";
     // const handler = async (req, res) =>{
         // const {name, email, password} = req.body

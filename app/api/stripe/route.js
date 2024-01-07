@@ -2,30 +2,18 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET);
 
-let sessionInfo;
 export async function POST(req, res) {
+  
   if (req.method === "POST") {
     // let data = await req.json();
-    console.log(req.headers);
+    // console.log(req.headers);
     let passedValue = await req.text();
-    console.log(passedValue, "passed value");
+    // console.log(passedValue, "passed value");
     let valueToJson = JSON.parse(passedValue);
-    console.log(valueToJson);
+    // console.log(valueToJson);
     const cartData = valueToJson.cartData;
-    const userId = valueToJson.userEmail;
-    console.log(userId);
-    // console.log(req.body);
-    // req.text().then((text) => {
-    //   const data = JSON.parse(text); // Parse the text as JSON
-    //   const cartItems = data.cartItems; // Access the cart items
-    //   console.log(data);
-    //   // ... use the cart items
-    // }).catch((error) => {
-    //   console.error(error);
-    // });
-    // console.log(data.body.cartItems)
-    // console.log(req.body, "data");
-    // console.log(res)
+    const userId = valueToJson.userId;
+    // console.log(userId);
     try {
       const params = {
         submit_type: "pay",
@@ -58,22 +46,16 @@ export async function POST(req, res) {
           };
         }),
         metadata: {
-          userId,
+          userId, 
         },
 
-        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        // price: "{{price_123}}",
-
         mode: "payment",
-        success_url: `http://localhost:3000/?success=true`,
+        success_url: `http://localhost:3000/orders?success=true&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `http://localhost:3000/?canceled=true`,
       };
 
-      // Create Checkout Sessions from body params.
       const session = await stripe.checkout.sessions.create(params);
-   
-sessionInfo = session
-      // console.log(params.line_items.price_data.product_data.name,params.line_items.price_data.product_data.image);
+console.log({session},session.url)
       return NextResponse.json(session);
     } catch (err) {
       console.log(err, "err");
@@ -84,6 +66,9 @@ sessionInfo = session
     res.status(405).end("Method Not Allowed");
   }
 }
+
+//  Comments Ahead
+
 // async function storeSession(ctx){
 //   try {
 //     // Assuming the Checkout Session ID is sent as a parameter in the request
@@ -96,43 +81,41 @@ sessionInfo = session
 // }
 
 export async function GET(req, res) {
+  // console.log(sessionInfo);
+  // console.log({session})
+  const session1 = await stripe.checkout.sessions.retrieve('cs_test_a1KBcWZXjvzS0FTR7Ktns0LfelGPcualxbryd1Cu3s4YIg1FNqhtjmUwiC');
+  const paymentIntent = await stripe.paymentIntents.retrieve(
+    // "pi_3OLkg3SHh0F7a44U0iapBSkz"
+   session1.payment_intent
+  
+  );
+  
+  // let subtotal = paymentIntent.amount;
+  console.log("payment Intent", paymentIntent);
+  const chargeId = paymentIntent.latest_charge;
 
-  console.log("Session", sessionInfo)
-}
+  if (chargeId) {
+    const charge = await stripe.charges.retrieve(chargeId);
+    console.log("Charge", charge);
 
-// export async function GET(req, res) {
-//   console.log(sessionInfo);
-//   });
-//   const paymentIntent = await stripe.paymentIntents.retrieve(
-//     "pi_3OLkg3SHh0F7a44U0iapBSkz"
-//   );
-//   // let subtotal = paymentIntent.amount;
-//   console.log("payment Intent", paymentIntent);
-//   const chargeId = paymentIntent.latest_charge;
-
-//   if (chargeId) {
-//     const charge = await stripe.charges.retrieve(chargeId);
-//     console.log("Charge", charge);
-    
-
-
-//     const status = charge.status; // "succeeded"
-//     const amount = charge.amount; // 11999 (in the smallest currency unit, e.g., cents)
-//     const paymentMethod = charge.payment_method_details.type; // "card"
-//     const billingEmail = charge.billing_details.email;
-//     // Accessing card details
-//     const cardBrand = charge.payment_method_details.card.brand; // "visa"
-//     const last4Digits = charge.payment_method_details.card.last4; // "4242"
-//     const receipt_url = charge.receipt_url
-//     // Example: Log the details
-//     console.log("Status:", status);
-//     console.log("Invoice:", receipt_url);
-//     console.log("Billing Email:", billingEmail);
-//     console.log("Amount:", amount/100);
-//     console.log("Payment Method:", paymentMethod);
-//     console.log("Card Brand:", cardBrand);
-//     console.log("Last 4 Digits:", last4Digits);
-
+    const status = charge.status; // "succeeded"
+    const amount = charge.amount; // 11999 (in the smallest currency unit, e.g., cents)
+    const paymentMethod = charge.payment_method_details.type; // "card"
+    const billingEmail = charge.billing_details.email;
+    // Accessing card details
+    const cardBrand = charge.payment_method_details.card.brand; // "visa"
+    const last4Digits = charge.payment_method_details.card.last4; // "4242"
+    const receipt_url = charge.receipt_url
+    // Example: Log the details
+    console.log("Status:", status);
+    console.log("Invoice:", receipt_url);
+    console.log("Billing Email:", billingEmail);
+    console.log("Amount:", amount/100);
+    console.log("Payment Method:", paymentMethod);
+    console.log("Card Brand:", cardBrand);
+    console.log("Last 4 Digits:", last4Digits);
+  }
+  };
 
 //     const invoiceId = charge.invoice;
 

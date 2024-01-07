@@ -1,7 +1,7 @@
 import React from 'react'
 import mongoose from "mongoose";
 // import User from '@/models/UserModel';
-import Dessert from '@/models/DessertModel';
+import Dessert from '@/app/models/DessertModel';
 import { NextResponse } from "next/server";
     // const handler = async (req, res) =>{
         // const {name, email, password} = req.body
@@ -20,7 +20,7 @@ import { NextResponse } from "next/server";
             await mongoose.connect(process.env.MONGODB_URI);
             let d = new Dessert(payload);
             const result = await d.save();
-            return NextResponse.json({ result, success: true });
+            return NextResponse.json({ result, success:     true });
           }
         export async function GET(req, res) {
             let  desserts =[]

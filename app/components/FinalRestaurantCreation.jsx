@@ -11,9 +11,9 @@ function FinalRestaurantCreation({
   //   console.log(activeStep);
 
   const handleSubmit = (e) => {
-    console.log("Hello", jsonData);
-    console.log(filteredItems);
-    console.log(activeStep);
+    // console.log("Hello", jsonData);
+    // console.log(filteredItems);
+    // console.log(activeStep);
     setFormData0({
       restaurantName: "",
       restaurantContactNumber: 0,

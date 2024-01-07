@@ -1,9 +1,9 @@
 import React from 'react'
 import mongoose from "mongoose";
 // import User from '@/models/UserModel';
-import LargeCake from '@/models/LargeCakesModel';
+import LargeCake from '@/app/models/LargeCakesModel';
 import { NextResponse } from "next/server";
-import { largeCakes } from '@/app/database/mongooseSchema';
+// import { largeCake } from '@/app/database/mongooseSchema';
     // const handler = async (req, res) =>{
         // const {name, email, password} = req.body
         // const user = await User.create({

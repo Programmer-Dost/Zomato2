@@ -1,9 +1,16 @@
+"use server"
 import React from "react";
 import mongoose from "mongoose";
-import User from "@/models/UserModel";
+import User from "@/app/models/UserModel";
 import { NextResponse } from "next/server";
 var CryptoJS = require("crypto-js");
 var jwt = require("jsonwebtoken");
+import { cookies } from 'next/headers'
+
+
+// String does not match expected pattern occurs on not parsing the response to JSON or fetching the wrong URL
+
+
 // const handler = async (req, res) =>{
 // const {name, email, password} = req.body
 // const user = await User.create({
@@ -70,7 +77,7 @@ export async function POST(req, res) {
   if (user.length !== 0) {
     let decryptedPassword = CryptoJS.AES.decrypt(
       user[0].Password,
-      "SecretKey"
+      process.env.CRYPTO_JS_KEY
     ).toString(CryptoJS.enc.Utf8);
     console.log(decryptedPassword);
         
@@ -80,7 +87,7 @@ export async function POST(req, res) {
           payload.Password === decryptedPassword
     ) {
       console.log("Authenticated", user[0].Email, user[0].Password);
-      var token = jwt.sign({Email:user[0].Email, username: user[0].username, ContactNumber: user[0].ContactNumber, Address: user[0].Address}, 'jwtsecret', { expiresIn: '3d' });
+      var token = jwt.sign({Email:user[0].Email, username: user[0].username, ContactNumber: user[0].ContactNumber, Address: user[0].Address}, process.env.JWT_SECRET, { expiresIn: '3d' });
 
       console.log("Token", token)
       // var objToken = {
@@ -92,7 +99,8 @@ export async function POST(req, res) {
         //   httpOnly: true
         // });
         // return response;
-
+        
+        cookies().set('token', token, { secure: true,  httpOnly: true })
 
       return NextResponse.json(
         { result: user, success, message,token: token },
@@ -129,9 +137,13 @@ export async function POST(req, res) {
 //   console.log(user);
 //   // return user
 // }
+
 export async function GET(req, res) {
   try {
-    const users = await User.find();
+      
+    let userEmail= req.nextUrl.searchParams.get("userEmail");
+    console.log(userEmail);
+    const users = await User.find({Email:userEmail});
 
     console.log(users, "from login");
     return NextResponse.json( { result: users})
@@ -140,4 +152,3 @@ export async function GET(req, res) {
     NextResponse.json({ error: 'Internal Server Error' });
   }
 }
-

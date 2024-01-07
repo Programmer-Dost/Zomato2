@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 import { useState, useEffect } from "react";
 
@@ -23,7 +24,7 @@ function CartLayout({hideButtons}) {
         }
       } catch (error) {
         console.error(error);
-        localStorage.clear();
+        localStorage.removeItem("cart");
       }
     }, []);
     const saveCart = (myCart) => {
@@ -78,9 +79,11 @@ function CartLayout({hideButtons}) {
             // key={item.id}
             className="bg-white rounded-xl p-4 shadow-2xl shadow-cyan-500/50 m-8 opacity-100 w-fit"
           >
-            <img
+            <Image
               src={Cart[k].image}
               alt={Cart[k].productName}
+              width={600}
+              height={600}
               className="w-fit h-24 object-cover mb-2"
             />
             <h2 className="text-xl text-violet-700 font-semibold mb-2">

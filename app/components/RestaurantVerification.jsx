@@ -1,7 +1,8 @@
-
+  
 import React, { useEffect, useState } from "react";
 import FinalRestaurantCreation from "./FinalRestaurantCreation";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function RestaurantVerification({
   jsonData,
   filteredItems,
@@ -30,12 +31,12 @@ function RestaurantVerification({
       // Add or modify properties here
     };
   });
-
+console.log({mappedItems})
   // Output the mapped items
   // console.log("Mapped items:", mappedItems);
   // console.log(jsonDataObj);
   const [formData, setFormData] = useState({
-     restaurantName: "",
+    restaurantName: "",
     restaurantContactNumber: 0,
     restaurantEmail: "",
     restaurantAddress: "",
@@ -44,86 +45,59 @@ function RestaurantVerification({
     restaurantType: {
       items: [
         {
-          name:"",
-          description:"",
+          name: "",
+          description: "",
         },
         {
-          name:"",
-          description:"",
+          name: "",
+          description: "",
         },
         {
-          name:"",
-          description:"",
+          name: "",
+          description: "",
         },
         {
-          name:"",
-          description:"",
+          name: "",
+          description: "",
         },
         {
-          name:"",
-          description:"",
+          name: "",
+          description: "",
         },
         {
-          name:"",
-          description:"",
+          name: "",
+          description: "",
         },
       ],
     },
   });
-
-
 
   // console.log("filtereditems", filteredItems);
   // console.log("Mapped items:", mappedItems[0]?.name);
   // console.log(jsonDataObj.restaurantName);
-  
-const set = () =>{
-  setIsClicked(true)
-setFormData({
-    
-    restaurantName: jsonDataObj.restaurantName,
-    restaurantContactNumber: jsonDataObj.restaurantContactNumber,
-    restaurantEmail: jsonDataObj.restaurantEmail,
-    restaurantAddress: jsonDataObj.restaurantAddress,
-    restaurantLat: jsonDataObj.restaurantLat,
-    restaurantLng: jsonDataObj.restaurantLng,
-    restaurantType: {
-      items: [
-        {
-          name: mappedItems[0]?.name,
-          description: mappedItems[0]?.description,
-        },
-        {
-          name: mappedItems[1]?.name,
-          description: mappedItems[1]?.description,
-        },
-        {
-          name: mappedItems[2]?.name,
-          description: mappedItems[2]?.description,
-        },
-        {
-          name: mappedItems[3]?.name,
-          description: mappedItems[3]?.description,
-        },
-        {
-          name: mappedItems[4]?.name,
-          description: mappedItems[4]?.description,
-        },
-        {
-          name: mappedItems[5]?.name,
-          description: mappedItems[5]?.description,
-        },
-      ],
-    },
-  });
-}
+
+  const set = () => {
+    setIsClicked(true);
+    setFormData({
+      userId: jsonDataObj.userId,
+      restaurantName: jsonDataObj.restaurantName,
+      restaurantContactNumber: jsonDataObj.restaurantContactNumber,
+      restaurantEmail: jsonDataObj.restaurantEmail,
+      restaurantAddress: jsonDataObj.restaurantAddress,
+      restaurantLat: jsonDataObj.restaurantLat,
+      restaurantLng: jsonDataObj.restaurantLng,
+      restaurantType: {
+        items: mappedItems,
+      },
+    });
+  };
   const handleSubmit = async (e) => {
     // console.log("Hello", jsonData);
     // console.log(filteredItems);
     console.log(activeStep);
     // console.log("Form Data original", formData);
     // console.log(jsonDataObj.restaurantName);
-    setActiveStep(4);
+
     // setFormData1((prevData)=>({
     //   // ...prevData,
     //   restaurantName: jsonDataObj.restaurantName,
@@ -177,7 +151,29 @@ setFormData({
 
       if (response.status === 200) {
         console.log("Form data submitted successfully");
+        toast.success("😎 Where is your menu card?🎉", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        setSubmitted(true);
+        setActiveStep(4);
       } else {
+        toast.error("👹 Invalid Data!", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         console.error("Form submission failed");
       }
     } catch (error) {
@@ -186,7 +182,19 @@ setFormData({
   };
 
   return (
-    <div>
+    <div className="mb-56">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <section
         class={`text-gray-600 body-font flex justify-center mx-7 ${
           activeStep === 3 ? "block" : "hidden"
@@ -196,7 +204,15 @@ setFormData({
           <h1 className="text-violet-700 text-2xl"> RestaurantVerification:</h1>
           <p className="text-sm mt-4 mb-7 text-indigo-400">
             <button onClick={set}>
-            Do you want to submit?<span className={` ${isClicked ? 'text-violet-700 text-lg' : 'text-sm'}`}> Yes {isClicked ? '' : '(Touch to finalize)'}</span>
+              Do you want to submit?
+              <span
+                className={` ${
+                  isClicked ? "text-violet-700 text-lg" : "text-sm"
+                }`}
+              >
+                {" "}
+                Yes {isClicked ? "" : "(Touch to finalize)"}
+              </span>
             </button>
           </p>
 

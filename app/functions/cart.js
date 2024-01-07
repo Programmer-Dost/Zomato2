@@ -5,7 +5,7 @@ export const addtoCart = (itemCode, qty, price, productName, image) => {
     var newCart = JSON.parse(localStorage.getItem('cart')) || {};
     if (itemCode in newCart) {
       newCart[itemCode].qty = newCart[itemCode].qty + qty;
-      console.log(itemCode)
+      // console.log(itemCode)
     } else {
       newCart[itemCode] = {
         qty: qty,
@@ -15,8 +15,8 @@ export const addtoCart = (itemCode, qty, price, productName, image) => {
       };
     }
     localStorage.setItem("cart", JSON.stringify(newCart));
-console.log("Added to cart", itemCode, newCart)
-console.log(newCart[itemCode].qty )
+// console.log("Added to cart", itemCode, newCart)
+// console.log(newCart[itemCode].qty )
   };
   // export const itemqty = (itemCode)=>{JSON.parse(localStorage.getItem('cart'))[itemCode].qty}
   // console.log(itemqty(21))
@@ -58,6 +58,6 @@ export const SubTotal = ()=>{
   return subTotal.toFixed(2)
 }
 export const clearCart = ()=>{
-  localStorage.clear();
+  localStorage.removeItem("cart");
 }
 

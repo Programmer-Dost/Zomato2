@@ -1,26 +1,33 @@
-"use client"
+"use client";
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { addtoCart} from "@/app/functions/cart";
+import { addtoCart } from "@/app/functions/cart";
 import Image from "next/image";
+import { UserContext } from "../../../Context/UserProvider";
 function MenuPage() {
+  const { setCountAgain } = React.useContext(UserContext);
   const [smallCakesData, setsmallCakesData] = useState([]);
   async function render() {
     try {
-        const response = await fetch("/api/smallCakes", { cache: 'force-cache'}, {
+      const response = await fetch(
+        "/api/smallCakes",
+        { cache: "force-cache" },
+        {
           method: "GET",
-        });
-        let res = await response.json();
-        // console.log(res);
-        if (response.status === 200) {
-          setsmallCakesData(res.result);
-          // console.log(res.result, "response orders");
         }
-    }catch (err) {
-    console.log(err)
+      );
+      let res = await response.json();
+      // console.log(res);
+      if (response.status === 200) {
+        setsmallCakesData(res.result);
+        // console.log(res.result, "response orders");
+      }
+    } catch (err) {
+      console.log(err);
     }
-    }
+  }
   useEffect(() => {
     render();
   }, []);
@@ -47,35 +54,33 @@ function MenuPage() {
               width={400}
               height={400}
               className="w-full h-36 object-cover rounded mb-2"
-              priority={true}
+              priority
             />
             <h2 className="text-xl text-violet-700 font-semibold mb-2">
               {item.name}
             </h2>
-            <p className="text-gray-600 md:truncate">{item.description}
-           
-            </p>
+            <p className="text-gray-600 md:truncate">{item.description}</p>
             <p className="text-gray-600">${item.price.toFixed(2)}</p>
             <div className="mt-6 flex justify-between items-center">
-
+              <button
+                className="text-blue-700 font-bold"
+                onClick={() => {
+                  addtoCart(item.id, 1, item.price, item.name, item.image);
+                  setCountAgain((prev) => prev + 1);
+                }}
+              >
+                Add to Cart
+              </button>
+              <Link href="/Checkout">
                 <button
                   className="text-blue-700 font-bold"
                   onClick={() =>
                     addtoCart(item.id, 1, item.price, item.name, item.image)
                   }
                 >
-                  Add to Cart
+                  Buy Now
                 </button>
-                <Link href="/Checkout">
-                  <button
-                    className="text-blue-700 font-bold"
-                    onClick={() =>
-                      addtoCart(item.id, 1, item.price, item.name, item.image)
-                    }
-                  >
-                    Buy Now
-                  </button>
-                </Link>
+              </Link>
             </div>
           </div>
         ))}

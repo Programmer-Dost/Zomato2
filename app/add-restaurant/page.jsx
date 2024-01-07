@@ -5,14 +5,32 @@ import RestaurantType from "../components/RestaurantType";
 import { UserContext } from "../Context/UserProvider";
 import useGeoLocation from "./useGeoLocationHook";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 function CreateRestaurant() {
   const location = useGeoLocation();
-  const { loggedIn, login, userData, contextLoading } =
+  const { loggedIn, contextLoading, userData, login } =
     React.useContext(UserContext);
+
   let router = useRouter();
+
+  const [formData, setFormData] = useState({
+    restaurantName: "",
+    restaurantContactNumber: 0,
+    restaurantEmail: "",
+    restaurantAddress: "",
+    restaurantLat: location.coordinates?.lat || "Not Available",
+    restaurantLng: location.coordinates?.lng || "Not Available",
+    restaurantType: {
+      items: [
+        {
+          name: "",
+          description: "",
+        },
+      ],
+    },
+  });
   useEffect(() => {
     if (contextLoading == false) {
+      login();
       setFormData((prevFormData) => ({
         ...prevFormData,
         restaurantLat: location.coordinates?.lat || "",
@@ -28,16 +46,19 @@ function CreateRestaurant() {
   }, [loggedIn, contextLoading, userData, location]);
 
   const overlayStyles = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
+    // position: "absolute",
+    // top: 0,
+    // left: 0,
+    // right:0,
+    // bottom:0,  
+    // marginLeft:"14px",
+    // width: "100%",
+    // height: "100%",
     display: "none",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    zIndex: 9999,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // backgroundColor: "rgba(0, 0, 0, 0.5)",
+    // zIndex: 9999,
   };
 
   const [activeStep, setActiveStep] = useState(1); // Declare activeStep state
@@ -47,22 +68,7 @@ function CreateRestaurant() {
 
   let lat = location.coordinates?.lat;
   let lng = location.coordinates?.lng;
-  const [formData, setFormData] = useState({
-    restaurantName: "hi",
-    restaurantContactNumber: 0,
-    restaurantEmail: "",
-    restaurantAddress: "",
-    restaurantLat: location.coordinates?.lat || "Not Available",
-    restaurantLng: location.coordinates?.lng || "Not Available",
-    restaurantType: {
-      items: [
-        {
-          name: "",
-          description: "",
-        },
-      ],
-    },
-  });
+
   // setFormData((prevData) => ({
   //   ...prevData,
   //   restaurantLat:lat,
@@ -80,7 +86,6 @@ function CreateRestaurant() {
       [name]: value,
       userId: userData._id,
     }));
-
   };
 
   // Handle form submission
@@ -141,8 +146,8 @@ function CreateRestaurant() {
       ) : (
         <>
           <div style={overlayStyles}>
-            <p style={{ fontSize: "24px", color: "red" }}>
-              Location data is not available
+            <p className="text-sm sm:text-md ml-4 mb-4 text-red-600">
+              Turn on your GPS
             </p>
           </div>
           <section
@@ -174,9 +179,9 @@ function CreateRestaurant() {
                     <h2 class="title-font font-semibold text-gray-900 tracking-widest text-xs">
                       EMAIL
                     </h2>
-                    <Link class="text-indigo-500 leading-relaxed">
+                    <p class="text-indigo-500 leading-relaxed">
                       example@email.com
-                    </Link>
+                    </p>
                     <h2 class="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">
                       PHONE
                     </h2>
@@ -312,8 +317,7 @@ function CreateRestaurant() {
                     Next
                   </button>
                   <p class="text-xs text-gray-500 mt-3">
-                    Chicharrones blog helvetica normcore iceland tousled brook
-                    viral artisan.
+                    Enter accurate address or your restaurant will not get sortlisted
                   </p>
                 </form>
                 {submitted && (
@@ -337,5 +341,4 @@ function CreateRestaurant() {
     </div>
   );
 }
-
 export default CreateRestaurant;

@@ -1,11 +1,13 @@
 "use client";
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { addtoCart } from "@/app/functions/cart";
 import Image from "next/image";
-
+import { UserContext } from "../../Context/UserProvider";
 function MenuPage() {
+  const { setCountAgain } = React.useContext(UserContext);
   const [cartitem, setCartitem] = useState({});
 
   const [pastriesData, setpastriesData] = useState([]);
@@ -60,7 +62,7 @@ function MenuPage() {
               width={400}
               height={400}
               className="w-full h-36 object-cover mb-2"
-              priority={true}
+              priority
             />
             <h2 className="text-xl text-violet-700 font-semibold mb-2">
               {item.name}
@@ -70,8 +72,10 @@ function MenuPage() {
             <div className="mt-6 flex justify-between items-center">
               <button
                 className="text-blue-700 font-bold"
-                onClick={() =>
-                  addtoCart(item.id, 1, item.price, item.name, item.image)
+                onClick={() =>{
+                  addtoCart(item.id, 1, item.price, item.name, item.image);
+                  setCountAgain((prev) => prev + 1);
+                }
                 }
               >
                 Add to Cart

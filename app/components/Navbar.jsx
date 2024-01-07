@@ -254,7 +254,7 @@ function Navbar() {
                 // width="24"
                 // height="24"
                 fill="currentColor"
-                className="bi bi-person-lines-fill w-5 h-5 md:w-6 md:h-6 ml-4 md:ml-0 mb-1"
+                className="bi bi-person-lines-fill w-5 h-5 md:w-6 md:h-6 ml-4 md:ml-0 mb-2"
                 viewBox="0 0 16 16"
                 onMouseOver={toggleDropdown}
                 onMouseLeave={toggleDropdown}
@@ -346,7 +346,7 @@ function Navbar() {
               )}
             </PopoverContent>
           </Popover>
-          <span className="ml-4 mt-4 mr-6">
+          <span className="ml-4 mt-3 mr-6">
         <Link
             href="/Checkout"
             className="mr-5 hover:text-indigo-600 cursor-pointer"
@@ -363,7 +363,7 @@ function Navbar() {
               <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />{" "}
             </svg>
           </Link>
-              <span className="text-xs text-violet-600 top-8 absolute"> {cartData} </span>
+              <span className="text-xs text-violet-600 top-7 absolute"> {cartData} </span>
           </span>
         </span>
         {/* <a href="/cart" className="text-gray-600">

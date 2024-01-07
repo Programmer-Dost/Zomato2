@@ -233,7 +233,7 @@ const Page = () => {
       <h1 className="text-gray-600 text-lg md:text-xl ml-4">
         {" "}
         {!loggedIn ? (
-          <div className="text-gray-400 flex flex-col justify-center items-center mt-72 md:mt-96 text-2xl">
+          <div className="text-gray-400 flex flex-col justify-center items-center mt-72 md:mt-96 text-2xl absolute top-0 bottom-0 left-0 right-0 h-screen">
             Loading...
           </div>
         ) : orders.length > 0 ? (
@@ -257,7 +257,7 @@ const Page = () => {
               //     order.last4Digits,
               //     order.receipt_url}</h1>
 
-              <div className="p-4 xl:w-1/2 w-full" key={order.chargeId}>
+              <div className={`p-4 ${orders.length >1 ? "xl:w-1/2" :''} w-full`} key={order.chargeId}>
                 <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col w-full  text-sm">
                   <div className="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
                     {/* <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-8 h-8" viewBox="0 0 24 24">

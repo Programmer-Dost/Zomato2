@@ -1,12 +1,16 @@
 "use client";
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { addtoCart } from "@/app/functions/cart";
 import Image from "next/image";
+import { UserContext } from "../../../Context/UserProvider";
 // import { getQty } from '@/app/functions/cart';
 function MenuPage() {
+  const { setCountAgain } = React.useContext(UserContext);
   const [largeCakesData, setlargeCakesData] = useState([]);
+
   async function render() {
     try {
       const response = await fetch("/api/largeCakes", {
@@ -65,7 +69,7 @@ function MenuPage() {
               width={600}
               height={600}
               className="w-full h-36 object-cover mb-2"
-              priority={true}
+              priority
             />
             <h2 className="text-xl text-violet-700 font-semibold mb-2">
               {item.name}
@@ -91,8 +95,10 @@ function MenuPage() {
               {/* <span>Add to Cart</span> */}
               <button
                 className="text-blue-700 font-bold"
-                onClick={() =>
-                  addtoCart(item.id, 1, item.price, item.name, item.image)
+                onClick={() =>{
+                  addtoCart(item.id, 1, item.price, item.name, item.image);
+                  setCountAgain((prev) => prev + 1);
+                }
                 }
               >
                 Add to Cart
@@ -100,8 +106,10 @@ function MenuPage() {
               <Link href="/Checkout">
                 <button
                   className="text-blue-700 font-bold"
-                  onClick={() =>
-                    addtoCart(item.id, 1, item.price, item.name, item.image)
+                  onClick={() =>{
+                    addtoCart(item.id, 1, item.price, item.name, item.image);
+                
+                  }
                   }
                 >
                   Buy Now

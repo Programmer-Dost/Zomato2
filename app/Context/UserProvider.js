@@ -74,6 +74,7 @@ const UserProvider = ({ children }) => {
         } else {
           console.log("User not found | Login Again");
           logout();
+          
           setContextLoading(false);
         }
       }
@@ -129,6 +130,7 @@ const UserProvider = ({ children }) => {
     }
   }, [loggedIn, adminloggedIn]);
   useEffect(() => {
+    console.log("cart")
     let keys = Object.keys(JSON.parse(localStorage.getItem("cart")) || {});
     if (keys.length > 0) {
       setcartData(

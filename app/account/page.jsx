@@ -267,12 +267,12 @@ function Page() {
       />
       <div
         className={`text-gray-400 flex justify-center items-center h-screen text-2xl ${
-          !loggedIn ? "block" : "hidden"
+          !contextLoading && !loggedIn ? "block" : "hidden"
         }`}
       >
         Loading...
       </div>
-      <span className={`${!loggedIn ? "hidden" : "block"}`}>
+      <span className={`${!contextLoading && !loggedIn ? "hidden" : "block"}`}>
         <h1 className="ml-6 text-gray-600 ">Account Information</h1>
         <div className="flex flex-col m-4 flex items-center justify-center hover:blue-900 w-fit p-4 rounded relative mt-8">
           <svg
@@ -545,9 +545,9 @@ function Page() {
                       key={index}
                       className="list-disc mt-3 md:max-w-xl lg:max-w-2xl xl:max-w-4xl"
                     >
-                      <p className="text-pink-400">
+                      <span className="text-pink-400">
                         Name:<span className="text-gray-200"> {item.name}</span>
-                      </p>
+                      </span>
                       <p className="text-pink-400">
                         Description:{" "}
                         <span className="text-gray-200 ">

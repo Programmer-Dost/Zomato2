@@ -13,7 +13,7 @@ export async function POST(req, res) {
     // console.log(valueToJson);
     const cartData = valueToJson.cartData;
     const userId = valueToJson.userId;
-    // console.log(userId);
+    console.log(userId);
     try {
       const params = {
         submit_type: "pay",
@@ -29,6 +29,7 @@ export async function POST(req, res) {
           console.log(productName);
           console.log((price * 100).toFixed(0));
           console.log(image);
+          console.log(qty)
           return {
             price_data: {
               currency: "inr",
@@ -50,8 +51,8 @@ export async function POST(req, res) {
         },
 
         mode: "payment",
-        success_url: `http://localhost:3000/orders?success=true&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `http://localhost:3000/?canceled=true`,
+        success_url: `https://zomato2.vercel.app/orders?success=true&session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `https://zomato2.vercel.app/?canceled=true`,
       };
 
       const session = await stripe.checkout.sessions.create(params);

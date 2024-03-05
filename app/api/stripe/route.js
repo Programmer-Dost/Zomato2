@@ -81,7 +81,7 @@ console.log({session},session.url)
 // }
 // }
 
-export async function GET(req, res) {
+export async function GET() {
   // console.log(sessionInfo);
   // console.log({session})
   const session1 = await stripe.checkout.sessions.retrieve('cs_test_a1KBcWZXjvzS0FTR7Ktns0LfelGPcualxbryd1Cu3s4YIg1FNqhtjmUwiC');
@@ -116,7 +116,7 @@ export async function GET(req, res) {
     console.log("Card Brand:", cardBrand);
     console.log("Last 4 Digits:", last4Digits);
   }
-  };
+  }
 
 //     const invoiceId = charge.invoice;
 

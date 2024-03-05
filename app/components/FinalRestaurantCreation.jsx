@@ -10,7 +10,7 @@ function FinalRestaurantCreation({
   // const jsonDataObj = JSON.parse(jsonData);
   //   console.log(activeStep);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     // console.log("Hello", jsonData);
     // console.log(filteredItems);
     // console.log(activeStep);
@@ -29,7 +29,7 @@ function FinalRestaurantCreation({
   return (
     <div className={`${activeStep === 4 ? "block" : "hidden"}`}>
       <section
-        class={`text-gray-600 body-font flex justify-center mx-7 md:flex transition-all duration-300`}
+        className={`text-gray-600 body-font flex justify-center mx-7 md:flex transition-all duration-300`}
       >
         <div>
           <h1 className="text-violet-700 text-2xl">

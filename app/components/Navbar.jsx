@@ -11,21 +11,21 @@ import {
 import { UserContext } from "../Context/UserProvider";
 import { useEffect, useState } from "react";
 function Navbar() {
-  const { loggedIn, login, logout, user, contextLoading, cartData } =
+  const { loggedIn, login, logout, contextLoading, cartData } =
     React.useContext(UserContext);
   // if (!user.value) {
   //   // Render loading indicator or alternative content while user data is fetching
   //   return <div className="lds-hourglass"></div>;
   // }
   const [dropdown, setDropdown] = useState(false);
-  const [userExists, setuserExists] = useState();
+  // const [userExists, setuserExists] = useState();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     // console.log("token", token);
-    if (token) {
-      setuserExists({ value: token });
-    }
+    // if (token) {
+    //   setuserExists({ value: token });
+    // }
     if (!contextLoading) {
       login()
       if (loggedIn) {
@@ -36,7 +36,7 @@ function Navbar() {
         // console.log(user);
       }
     }
-  }, [contextLoading, loggedIn]);
+  }, [contextLoading, loggedIn,login]);
   // console.log(userExists);
   const toggleDropdown = () => {
     // console.log(dropdown)
@@ -61,7 +61,7 @@ function Navbar() {
           <span className="ml-3 text-xl hidden sm:block">Zomato-lite</span>
         </Link>
 
-        <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center text-sm sm:text-[16px] hidden md:block">
+        <nav className="md:ml-auto md:mr-auto  flex-wrap items-center justify-center text-sm sm:text-[16px] hidden md:block">
           <Link
             href="/add-restaurant"
             className="mr-5 hover:text-indigo-600 cursor-pointer"
@@ -148,9 +148,9 @@ function Navbar() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-4 h-4 ml-1"
                     viewBox="0 0 24 24"
                   >
@@ -185,9 +185,9 @@ function Navbar() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-4 h-4 ml-1"
                     viewBox="0 0 24 24"
                   >
@@ -283,9 +283,9 @@ function Navbar() {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     className="w-4 h-4 ml-1"
                     viewBox="0 0 24 24"
                   >
@@ -328,14 +328,14 @@ function Navbar() {
                 </>
               ) : (
                 <Link href="/login">
-                  <button className="inline-flex items-center hover:text-pink-600  border-0 py-1 px-3 focus:outline-none rounded text-base mt-4 md:mt-0 text-sm sm:text-[16px]">
+                  <button className="inline-flex items-center hover:text-pink-600  border-0 py-1 px-3 focus:outline-none rounded  mt-4 md:mt-0 text-sm sm:text-[16px]">
                     Login
                     <svg
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       className="w-4 h-4 ml-1"
                       viewBox="0 0 24 24"
                     >

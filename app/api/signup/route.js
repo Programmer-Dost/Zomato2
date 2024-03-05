@@ -1,4 +1,3 @@
-import React from "react";
 import mongoose from "mongoose";
 import User from "@/app/models/UserModel";
 import { NextResponse } from "next/server";
@@ -15,7 +14,7 @@ var CryptoJS = require("crypto-js");
 //     user
 // })
 // await mongoose.connect(process.env.MONGODB_URI);
-export async function POST(req, res) {
+export async function POST(req) {
   const payload = await req.json();
   await mongoose.connect(process.env.MONGODB_URI);
   const { username, ContactNumber, Address, Email } = payload;

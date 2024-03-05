@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
 
-export async function GET(req, res) {
+export async function GET() {
 
   await mongoose.connect(process.env.MONGODB_URI);
   
@@ -21,7 +21,7 @@ export async function GET(req, res) {
 }
 
 
-export async function POST(req, res) {
+export async function POST(req) {
   const payload = await req.json();
   // console.log(payload);
   const {

@@ -1,5 +1,5 @@
   
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import FinalRestaurantCreation from "./FinalRestaurantCreation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,15 +15,15 @@ function RestaurantVerification({
   const [isClicked, setIsClicked] = useState(false);
   //Find filtered items
 
-  const mappedItems = filteredItems.map((item, index) => {
+  const mappedItems = filteredItems.map((item) => {
     // Here, you can access and manipulate each item as needed
-    const itemName = item.name;
-    const itemDescription = item.description;
+    // const itemName = item.name;
+    // const itemDescription = item.description;
 
     // Perform your desired operations on the item
-    console.log(
-      `Item ${index + 1}: Name - ${itemName}, Description - ${itemDescription}`
-    );
+    // console.log(
+    //   `Item ${index + 1}: Name - ${itemName}, Description - ${itemDescription}`
+    // );
 
     // You can also return a modified version of the item
     return {
@@ -31,7 +31,7 @@ function RestaurantVerification({
       // Add or modify properties here
     };
   });
-console.log({mappedItems})
+// console.log({mappedItems})
   // Output the mapped items
   // console.log("Mapped items:", mappedItems);
   // console.log(jsonDataObj);
@@ -91,10 +91,10 @@ console.log({mappedItems})
       },
     });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     // console.log("Hello", jsonData);
     // console.log(filteredItems);
-    console.log(activeStep);
+    // console.log(activeStep);
     // console.log("Form Data original", formData);
     // console.log(jsonDataObj.restaurantName);
 
@@ -139,7 +139,7 @@ console.log({mappedItems})
     //Submit Form Data
     // Convert form data to JSON
     const jsonDataFinal = JSON.stringify(formData, null, 2);
-    console.log("String form Data Final", jsonDataFinal);
+    // console.log("String form Data Final", jsonDataFinal);
     try {
       const response = await fetch("/api/restaurants", {
         method: "POST",
@@ -196,7 +196,7 @@ console.log({mappedItems})
         theme="dark"
       />
       <section
-        class={`text-gray-600 body-font flex justify-center mx-7 ${
+        className={`text-gray-600 body-font flex justify-center mx-7 ${
           activeStep === 3 ? "block" : "hidden"
         } transition-all duration-300`}
       >

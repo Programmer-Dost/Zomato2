@@ -9,7 +9,7 @@ function Page() {
   const [orders, setOrders] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedStatus, setSelectedStatus] = useState({});
-  const { contextLoading, adminloggedIn, adminlogin, adminlogout, admin } =
+  const { contextLoading, adminloggedIn, adminlogin, adminlogout} =
     React.useContext(UserContext);
   const router = useRouter();
   const handleChange = (event, order) => {
@@ -63,7 +63,7 @@ function Page() {
       if (contextLoading == false) {
         // console.log({adminloggedIn}, "adminlogged in");
         if (adminloggedIn) {
-          adminlogin();
+          // adminlogin();
           render();
           // adminlogin();
         }
@@ -91,7 +91,7 @@ function Page() {
     //  })
 
     // cs_test_a1sBkOnJyyCv9FfZt5rogyFokDMk60s6SSVyrogePJGRyVE8u8I1c1vA2Y
-  }, [adminloggedIn, contextLoading, selectedStatus, counter]);
+  }, [adminloggedIn, contextLoading, selectedStatus, counter, adminlogin, router]);
 
   return (
     <div>
@@ -118,7 +118,7 @@ function Page() {
       {adminloggedIn ? (
         <section className="text-gray-600 body-font">
           <div className="container px-5 py-24  flex flex-wrap ">
-            <div className="flex flex-wrap  flex items-center justify-center text-sm md:text-[16px]">
+            <div className="flex flex-wrap  items-center justify-center text-sm md:text-[16px]">
               {orders?.map((order) => (
                 // <h1>{order.chargeId,
                 //     order.userId,
@@ -134,7 +134,7 @@ function Page() {
                   Order ID: {order.chargeId}
                   <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 md:flex-row flex-col w-full">
                     <div className="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-                      {/* <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-8 h-8" viewBox="0 0 24 24">
+                      {/* <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-8 h-8" viewBox="0 0 24 24">
               <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
             </svg> */}
                       <svg

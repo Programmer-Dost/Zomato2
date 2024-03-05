@@ -1,5 +1,4 @@
 "use server"
-import React from "react";
 import mongoose from "mongoose";
 import User from "@/app/models/UserModel";
 import { NextResponse } from "next/server";
@@ -52,7 +51,7 @@ import { cookies } from 'next/headers'
 // }
 
 await mongoose.connect(process.env.MONGODB_URI);
-export async function POST(req, res) {
+export async function POST(req) {
   // let user = [];
   let success = true;
   let message = "Successfully Logged in";
@@ -138,7 +137,7 @@ export async function POST(req, res) {
 //   // return user
 // }
 
-export async function GET(req, res) {
+export async function GET(req) {
   try {
       
     let userEmail= req.nextUrl.searchParams.get("userEmail");

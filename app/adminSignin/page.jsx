@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../Context/UserProvider";
 function LoginPage() {
-  const {adminlogin } = React.useContext(UserContext);
+  const {setAdminLoggedIn } = React.useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({ username: "Username is required" });
 
@@ -102,8 +102,7 @@ function LoginPage() {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } else {
-    }
+    } 
 
     //     {  "username": "Abhi",
     //     "ContactNumber": 679234567890,
@@ -115,7 +114,7 @@ function LoginPage() {
 
     // Convert form data to JSON
     const jsonDataFinal = JSON.stringify(formData, null, 2);
-    console.log("String form Data Final", jsonDataFinal);
+    // console.log("String form Data Final", jsonDataFinal);
     try {
       const response = await fetch("/api/admin", {
         method: "POST",
@@ -131,12 +130,13 @@ function LoginPage() {
   const token = responseData.token;
 
   // Use the extracted token for further processing
-  console.log("Token:", token);
+  // console.log("Token:", token);
 //  const token =  response.cookies.get("token")
         localStorage.setItem("adminToken", token)
         setSubmitted(true);
-        console.log("Form data submitted successfully", formData);
-   adminlogin()
+        // console.log("Form data submitted successfully", formData);
+        setAdminLoggedIn(true);
+  //  adminlogin()
         // setAdminEmail(formData.Email)
         
         toast.success("🎉 Signed In successfully! Redirecting 🤗", {
@@ -218,7 +218,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlFor="Email"
+              htmlhtmlFor="Email"
             >
               Email
             </label>
@@ -242,7 +242,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlFor="password"
+              htmlhtmlFor="password"
             >
               Password
             </label>
@@ -274,7 +274,7 @@ function LoginPage() {
                 onChange={handleCheckboxChange}
               />
               <label
-                htmlFor="remember-me"
+                htmlhtmlFor="remember-me"
                 className="ml-2 text-sm text-gray-700"
               >
                 Remember me

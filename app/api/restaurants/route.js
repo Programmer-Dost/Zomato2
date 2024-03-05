@@ -1,9 +1,8 @@
-// import Dessert from "@/models/DessertModel";
 import Restaurant from "@/app/models/RestaurantModel";
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 
-export async function GET(req, res) {
+export async function GET(req) {
   try {
       
     let userId= req.nextUrl.searchParams.get("userId");
@@ -28,7 +27,7 @@ export async function GET(req, res) {
 //     return NextResponse.json({ result: data, success: true });
 //   }
 
-  export async function POST(req, res) {
+  export async function POST(req) {
     const payload = await req.json();
     await mongoose.connect(process.env.MONGODB_URI);
     let d = new Restaurant(payload);

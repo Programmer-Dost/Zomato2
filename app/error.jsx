@@ -1,5 +1,5 @@
 "use client"; // Error components must be Client Components
-
+import PropTypes from 'prop-types'
 import { useEffect } from "react";
 import Link from "next/link";
 export default function Error({ error, reset }) {
@@ -24,4 +24,8 @@ export default function Error({ error, reset }) {
       </Link>
     </div>
   );
+}
+Error.PropTypes= {
+  error: PropTypes.object.isRequired,
+  reset: PropTypes.func
 }

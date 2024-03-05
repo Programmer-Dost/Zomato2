@@ -34,7 +34,7 @@ export default function Home() {
             <div className="flex w-full md:justify-start justify-center items-end">
               <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
                 <label
-                  htmlFor="hero-field"
+                  htmlhtmlFor="hero-field"
                   className="leading-7 text-xs sm:text-sm sm:mr-52 md:mr-0 text-gray-600 "
                 >
                   {` Starving for?`}
@@ -45,7 +45,7 @@ export default function Home() {
                   value="What's Cooking!"
                   name="hero-field"
                   readOnly={true}
-                  className="w-36 sm:w-full ml-2 text-sm sm:text-[16px] bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none text-indigo-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out bg-black text-indigo-500"
+                  className="w-36 sm:w-full ml-2  sm:text-[16px] bg-opacity-50 rounded border border-gray-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out bg-black text-indigo-500"
                 />
               </div>
               <Link href="/dishes">
@@ -82,7 +82,7 @@ export default function Home() {
                   <path d="M99.617 8.057a50.191 50.191 0 00-38.815-6.713l230.932 230.933 74.846-74.846L99.617 8.057zM32.139 20.116c-6.441 8.563-10.148 19.077-10.148 30.199v411.358c0 11.123 3.708 21.636 10.148 30.199l235.877-235.877L32.139 20.116zM464.261 212.087l-67.266-37.637-81.544 81.544 81.548 81.548 67.273-37.64c16.117-9.03 25.738-25.442 25.738-43.908s-9.621-34.877-25.749-43.907zM291.733 279.711L60.815 510.629c3.786.891 7.639 1.371 11.492 1.371a50.275 50.275 0 0027.31-8.07l266.965-149.372-74.849-74.847z"></path>
                 </svg>
                 <Link href="https://play.google.com/store/apps/details?id=com.application.zomato&pcampaignid=web_share">
-                  <span className="ml-4 flex items-start flex-col leading-none hidden sm:block">
+                  <span className="ml-4 items-start flex-col leading-none hidden sm:block">
                     <span className="text-xs text-gray-600 mb-1">
                       GET IT ON
                     </span>
@@ -102,7 +102,7 @@ export default function Home() {
                   <path d="M212.1 0c-15.76.64-34.67 10.35-45.97 23.58-9.6 11.13-19 29.68-16.52 48.38a2.5 2.5 0 002.29 2.17c1.06.08 2.15.12 3.23.12 15.41 0 32.04-8.52 43.4-22.25 11.94-14.5 17.99-33.1 16.16-49.77A2.52 2.52 0 00212.1 0z"></path>
                 </svg>
                 <Link href="https://apps.apple.com/in/app/zomato-food-delivery-dining/id434613896">
-                  <span className="ml-4 flex items-start flex-col leading-none hidden sm:block">
+                  <span className="ml-4  items-start flex-col leading-none hidden sm:block">
                     <span className="text-xs text-gray-600 mb-2 ">
                       Download on the
                     </span>

@@ -111,7 +111,6 @@ function Page() {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } else {
     }
 
     //     {  "username": "Abhi",
@@ -243,7 +242,7 @@ function Page() {
         router.push("/login");
       }
     }
-  }, [loggedIn, userData, submitted, contextLoading]);
+  }, [loggedIn, userData, submitted, contextLoading, router]);
   function editInfo() {
     SetToggleEdit(!toggleEdit);
   }
@@ -274,7 +273,7 @@ function Page() {
       </div>
       <span className={`${!contextLoading && !loggedIn ? "hidden" : "block"}`}>
         <h1 className="ml-6 text-gray-600 ">Account Information</h1>
-        <div className="flex flex-col m-4 flex items-center justify-center hover:blue-900 w-fit p-4 rounded relative mt-8">
+        <div className="flex flex-col m-4 items-center justify-center hover:blue-900 w-fit p-4 rounded relative mt-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -333,7 +332,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlFor="username"
+                    htmlhtmlFor="username"
                   >
                     Username
                   </label>
@@ -355,7 +354,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlFor="Email"
+                    htmlhtmlFor="Email"
                   >
                     Email
                   </label>
@@ -377,7 +376,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlFor="password"
+                    htmlhtmlFor="password"
                   >
                     New Password
                   </label>
@@ -399,7 +398,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlFor="contactNumber"
+                    htmlhtmlFor="contactNumber"
                   >
                     Contact Number
                   </label>
@@ -429,7 +428,7 @@ function Page() {
               <div className="mb-6 mx-2">
                 <label
                   className="block text-gray-500 font-bold mb-2"
-                  htmlFor="Address"
+                  htmlhtmlFor="Address"
                 >
                   Address
                 </label>

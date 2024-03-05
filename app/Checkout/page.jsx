@@ -67,7 +67,7 @@ function Page() {
       console.error(error);
       localStorage.removeItem("cart");
     }
-  }, [contextLoading, loggedIn, userData, count]);
+  }, [contextLoading, loggedIn, userData, count, login]);
 
   const handleClick = () => {
     setCount((prev) => prev + 1);
@@ -77,10 +77,10 @@ function Page() {
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart));
   };
-  let Subtotal;
-  {
-    typeof window !== "undefined" && (Subtotal = SubTotal());
-  }
+  // let Subtotal;
+  // {
+  //   typeof window !== "undefined" && (Subtotal = SubTotal());
+  // }
 
   function CartAmountToggle({ k, cartData }) {
     return (
@@ -249,7 +249,7 @@ function Page() {
         </div>
 
         <div
-          className="flex flex-row my-8 bg-gray-300 w-fit p-1 sm:p-2 cursor-pointer flex items-center rounded"
+          className="flex flex-row my-8 bg-gray-300 w-fit p-1 sm:p-2 cursor-pointer items-center rounded"
           onClick={initiatePayment}
         >
           <p className="text-violet-600 text-xs">Order Now </p>

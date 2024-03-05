@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../Context/UserProvider";
 function LoginPage() {
-  const {login } = React.useContext(UserContext);
+  const {login, setLoggedIn } = React.useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({ username: "Username is required" });
   const [isChecked, setIsChecked] = useState({ checked: false });
@@ -101,9 +101,7 @@ function LoginPage() {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } else {
     }
-
     //     {  "username": "Abhi",
     //     "ContactNumber": 679234567890,
     //     "Email": "abhi2y@email.com",
@@ -129,13 +127,9 @@ function LoginPage() {
   const responseData = await response.json();
   const token = responseData.token;
 
-  // Use the extracted token for further processing
-  // console.log("Token:", token);
-//  const token =  response.cookies.get("token")
         localStorage.setItem("token", token)
         setSubmitted(true);
-        // console.log("Form data submitted successfully", formData);
-        login()
+       
 
         toast.success("🎉 Signed In successfully! Redirecting 🤗", {
           position: "bottom-center",
@@ -147,16 +141,17 @@ function LoginPage() {
           progress: undefined,
           theme: "dark",
         });
+        setLoggedIn(true);
         setTimeout(() => {
 
             router.push("/dishes");
         }, 3000);
 
+        login();
         setFormData({
           Email: "",
           Password: "",
         });
-        login();
       } else {
         console.error("Form submission failed");
         toast.error("👹 User Not Found!", {
@@ -217,7 +212,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlFor="Email"
+              htmlhtmlFor="Email"
             >
               Email
             </label>
@@ -241,7 +236,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlFor="password"
+              htmlhtmlFor="password"
             >
               Password
             </label>
@@ -273,7 +268,7 @@ function LoginPage() {
                 onChange={handleCheckboxChange}
               />
               <label
-                htmlFor="remember-me"
+                htmlhtmlFor="remember-me"
                 className="ml-2 text-xs sm:text-sm text-gray-700"
               >
                 Remember me

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Head from "next/head";
 import Script from 'next/script'
 import "../globals.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -120,7 +119,6 @@ function LoginPage() {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } else {
     }
 
     //     {  "username": "Abhi",
@@ -227,7 +225,7 @@ function LoginPage() {
               </h1>
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlFor="username"
+                htmlhtmlFor="username"
               >
                 Username
               </label>
@@ -247,7 +245,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlFor="Email"
+                htmlhtmlFor="Email"
               >
                 Email
               </label>
@@ -267,7 +265,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlFor="password"
+                htmlhtmlFor="password"
               >
                 Password
               </label>
@@ -287,7 +285,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlFor="contactNumber"
+                htmlhtmlFor="contactNumber"
               >
                 Contact Number
               </label>
@@ -309,7 +307,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlFor="Address"
+                htmlhtmlFor="Address"
               >
                 Address
               </label>
@@ -336,7 +334,7 @@ function LoginPage() {
                   onChange={handleCheckboxChange}
                 />
                 <label
-                  htmlFor="remember-me"
+                  htmlhtmlFor="remember-me"
                   className="ml-2 text-sm text-gray-700 mb-2 "
                 >
                   Remember me

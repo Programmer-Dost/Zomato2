@@ -1,10 +1,7 @@
-import React from "react";
 import mongoose from "mongoose";
 import Admin from "@/app/models/AdminModel";
 import { NextResponse } from "next/server";
-var CryptoJS = require("crypto-js");
 var jwt = require("jsonwebtoken");
-import { cookies } from 'next/headers'
 await mongoose.connect(process.env.MONGODB_URI);
 
 // export async function POST(req, res) {
@@ -15,7 +12,7 @@ await mongoose.connect(process.env.MONGODB_URI);
 //     const result = await user.save();
 //     return NextResponse.json({ result, success: true });
 //   }
-export async function POST(req, res) {
+export async function POST(req) {
   let success = true;
   let message = "Successfully Logged in";
   let status = 201;

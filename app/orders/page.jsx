@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Stripe from "stripe";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../Context/UserProvider";
-var jwt = require("jsonwebtoken");
 import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,10 +12,7 @@ const Page = () => {
   const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET);
   const [orders, setOrder] = useState([]);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
-  const { loggedIn, contextLoading, login, logout, user, userData } =
-    React.useContext(UserContext);
-  const [decoded, setDecoded] = useState({});
+  const { loggedIn, contextLoading, userData } = React.useContext(UserContext);
   // let userEmail = decoded.Email
   // console.log("user", userEmail)
   // let userId = decoded.Email
@@ -39,7 +35,7 @@ const Page = () => {
           // let userId = session1?.metadata?.userId;
           // console.log(session1, "session");
           let paymentIntentId = session1.payment_intent;
-          console.log(paymentIntentId, "payment intent");
+          // console.log(paymentIntentId, "payment intent");
           const paymentIntent = await stripe.paymentIntents.retrieve(
             // "pi_3OMS8xSHh0F7a44U0R8y24GA"
             paymentIntentId
@@ -177,16 +173,9 @@ const Page = () => {
   useEffect(() => {
     if (contextLoading == false) {
       if (loggedIn) {
-        setIsLoading(true); // Set loading state
-        // getUser().then((user) => {
-        fetchData().then(() => {
-          // Now accessible
-          setIsLoading(false);
-        }); // Clear loading state
-        // });
+        fetchData();
       }
       if (!loggedIn) {
-        // Show the div first
         console.log("else from orders page is getting triggered");
         // Schedule the redirect after 3 seconds
         setTimeout(() => {
@@ -209,7 +198,7 @@ const Page = () => {
     //  })
 
     // cs_test_a1sBkOnJyyCv9FfZt5rogyFokDMk60s6SSVyrogePJGRyVE8u8I1c1vA2Y
-  }, [loggedIn, contextLoading, userData]);
+  }, [loggedIn, contextLoading, userData, router]);
 
   // console.log({userId}, "from useEffect")
 
@@ -245,7 +234,7 @@ const Page = () => {
       </h1>
       <section className="text-gray-600 body-font">
         <div className="container px-5 md:py-24 mx-auto flex flex-wrap">
-          <div className="flex flex-wrap m-4 flex items-center justify-center">
+          <div className="flex flex-wrap m-4 items-center justify-center">
             {orders?.map((order) => (
               // <h1>{order.chargeId,
               //     order.userId,
@@ -257,10 +246,13 @@ const Page = () => {
               //     order.last4Digits,
               //     order.receipt_url}</h1>
 
-              <div className={`p-4 ${orders.length >1 ? "xl:w-1/2" :''} w-full`} key={order.chargeId}>
+              <div
+                className={`p-4 ${orders.length > 1 ? "xl:w-1/2" : ""} w-full`}
+                key={order.chargeId}
+              >
                 <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col w-full  text-sm">
                   <div className="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
-                    {/* <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-8 h-8" viewBox="0 0 24 24">
+                    {/* <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-8 h-8" viewBox="0 0 24 24">
               <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
             </svg> */}
                     <svg

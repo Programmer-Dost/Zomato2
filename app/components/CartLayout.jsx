@@ -4,18 +4,18 @@ import Image from "next/image";
 import React from "react";
 import { useState, useEffect } from "react";
 
-function CartLayout({hideButtons}) {
+function CartLayout() {
     const [Cart, setCart] = useState({});
-    const [subTotal, setSubTotal] = useState(0);
+    // const [subTotal, setSubTotal] = useState(0);
 
-    const [shouldHideButtons, setShouldHideButtons] = useState(false);
+    // const [shouldHideButtons, setShouldHideButtons] = useState(false);
 
     // Update state based on prop
-    if (hideButtons) {
-      setShouldHideButtons(true);
-    }
+    // if (hideButtons) {
+    //   setShouldHideButtons(true);
+    // }
     useEffect(() => {
-      console.log("use effect from cart hi");
+      // console.log("use effect from cart hi");
   
       try {
         if (localStorage.getItem("cart")) {
@@ -29,12 +29,12 @@ function CartLayout({hideButtons}) {
     }, []);
     const saveCart = (myCart) => {
       localStorage.setItem("cart", JSON.stringify(myCart));
-      let subt = 0;
-      let keys = Object.keys(myCart);
-      for (let i = 0; i<keys.length; i++) {
-        subt += myCart[keys[i]]["price"] * myCart[keys[i]].qty;
-      }
-      setSubTotal(subt);
+      // let subt = 0;
+      // let keys = Object.keys(myCart);
+      // for (let i = 0; i<keys.length; i++) {
+      //   subt += myCart[keys[i]]["price"] * myCart[keys[i]].qty;
+      // }
+      // setSubTotal(subt);
     };
     const addtoCart = (itemCode, qty, price, productName, image) => {
       let newCart = Cart;
@@ -51,10 +51,10 @@ function CartLayout({hideButtons}) {
       setCart(newCart);
       saveCart(newCart);
     };
-    const clearCart = () => {
-      setCart({});
-      saveCart({});
-    };
+    // const clearCart = () => {
+    //   setCart({});
+    //   saveCart({});
+    // };
     const removeFromCart = (itemCode, qty) => {
       let newCart = Cart;
       if (itemCode in Cart) {
@@ -110,15 +110,15 @@ function CartLayout({hideButtons}) {
 {/* {!shouldHideButtons && ( */}
 {/* {!shouldHideButtons && ( */}
 {/* <div> 
-      <button id="btnClearCart" class="inline-flex items-center font-medium text-indigo-700 hover:text-indigo-600 bg-indigo-100 border-0 py-1 px-2 focus:outline-none rounded text-base mt-4 md:mt-0" onClick={clearCart}>
+      <button id="btnClearCart" className="inline-flex items-center font-medium text-indigo-700 hover:text-indigo-600 bg-indigo-100 border-0 py-1 px-2 focus:outline-none rounded text-base mt-4 md:mt-0" onClick={clearCart}>
   Clear Cart
 </button>
 <div>
-      <button id = "btnCheckout" class="inline-flex font-medium text-indigo-700 items-center hover:text-indigo-600 bg-indigo-100 border-0 py-1 px-2 focus:outline-none rounded text-base mt-4 md:mt-0"> 
+      <button id = "btnCheckout" className="inline-flex font-medium text-indigo-700 items-center hover:text-indigo-600 bg-indigo-100 border-0 py-1 px-2 focus:outline-none rounded text-base mt-4 md:mt-0"> 
         <a   className="mt-4" href="/Checkout">
   Checkout
 
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag ml-1" viewBox="0 0 16 16">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-bag ml-1" viewBox="0 0 16 16">
   <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
 </svg>
   </a>

@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 var jwt = require("jsonwebtoken");
 const UserContext = React.createContext({
   loggedIn: true,
+  setLoggedIn: ()=>{},
   adminloggedIn: true,
+  setAdminLoggedIn: ()=>{},
   admin: null,
   user: null,
   contextLoading: true,
@@ -24,16 +26,14 @@ const UserProvider = ({ children }) => {
   const [admin, setAdmin] = useState({ value: null });
   const [userData, setUserData] = useState({});
   const [countAgain, setCountAgain] = useState(0);
-  const [decoded, setDecoded] = useState({});
   const [cartData, setcartData] = useState(0);
-  async function getUser(token, adminToken) {
+  async function getUser(token) {
     // if (loggedIn) {
     if (token) {
       setUser({ value: token });
       try {
         let decodedToken = jwt.decode(token);
         // console.log("decoded token", decodedToken);
-        setDecoded(decodedToken);
         return decodedToken;
       } catch (e) {
         console.log("token verification failed");
@@ -130,7 +130,7 @@ const UserProvider = ({ children }) => {
     }
   }, [loggedIn, adminloggedIn]);
   useEffect(() => {
-    console.log("cart")
+    // console.log("cart")
     let keys = Object.keys(JSON.parse(localStorage.getItem("cart")) || {});
     if (keys.length > 0) {
       setcartData(
@@ -148,13 +148,13 @@ const UserProvider = ({ children }) => {
   const login = () => {
     if (user.value) {
       setLoggedIn(true);
-      console.log("Token exists, user logged in");
+      // console.log("Token exists, user logged in");
     }
   };
   const adminlogin = () => {
     if (admin.value != null) {
       setAdminLoggedIn(true);
-      console.log("Admin Token exists, Admin logged in");
+      // console.log("Admin Token exists, Admin logged in");
     } else {
       adminlogout();
     }
@@ -173,12 +173,14 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         loggedIn,
+        setLoggedIn,
         login,
         logout,
         user,
         contextLoading,
         userData,
         adminloggedIn,
+        setAdminLoggedIn,
         adminlogin,
         adminlogout,
         admin,

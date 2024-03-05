@@ -1,4 +1,3 @@
-import React from 'react'
 import mongoose from "mongoose";
 // import User from '@/models/UserModel';
 import LargeCake from '@/app/models/LargeCakesModel';
@@ -16,7 +15,7 @@ import { NextResponse } from "next/server";
         //     user
         // })
 
-        export async function POST(req, res) {
+        export async function POST(req) {
             const payload = await req.json();
             await mongoose.connect(process.env.MONGODB_URI);
             let d = new LargeCake(payload);
@@ -24,7 +23,7 @@ import { NextResponse } from "next/server";
             return NextResponse.json({ result, success: true });
           }
 
-        export async function GET(req, res) {
+        export async function GET() {
             let  LargeCakes =[]
             let success = true
             try{

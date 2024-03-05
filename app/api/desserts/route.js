@@ -1,4 +1,3 @@
-import React from 'react'
 import mongoose from "mongoose";
 // import User from '@/models/UserModel';
 import Dessert from '@/app/models/DessertModel';
@@ -15,14 +14,14 @@ import { NextResponse } from "next/server";
         //     user
         // })
 
-        export async function POST(req, res) {
+        export async function POST(req) {
             const payload = await req.json();
             await mongoose.connect(process.env.MONGODB_URI);
             let d = new Dessert(payload);
             const result = await d.save();
             return NextResponse.json({ result, success:     true });
           }
-        export async function GET(req, res) {
+        export async function GET() {
             let  desserts =[]
             let success = true
             try{

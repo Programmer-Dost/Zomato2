@@ -36,7 +36,7 @@ function Navbar() {
         // console.log(user);
       }
     }
-  }, [contextLoading, loggedIn,login]);
+  }, [contextLoading, loggedIn, login]);
   // console.log(userExists);
   const toggleDropdown = () => {
     // console.log(dropdown)

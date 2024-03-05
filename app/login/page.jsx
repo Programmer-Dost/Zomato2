@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../Context/UserProvider";
 function LoginPage() {
-  const {login, setLoggedIn } = React.useContext(UserContext);
+  const { login, setLoggedIn } = React.useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({ username: "Username is required" });
   const [isChecked, setIsChecked] = useState({ checked: false });
@@ -39,34 +39,34 @@ function LoginPage() {
       [name]: value,
     }));
     //Validation Logic Here
-    const validationErrors = {};
+    // const validationErrors = {};
 
-    if (!formData.Email) {
-      validationErrors.Email = "Please enter your Email for future updates.";
-    }
+    // if (!formData.Email) {
+    //   validationErrors.Email = "Please enter your Email for future updates.";
+    // }
 
-    if (!formData.Password) {
-      validationErrors.Password = "Password is required.";
-    }
+    // if (!formData.Password) {
+    //   validationErrors.Password = "Password is required.";
+    // }
 
-    if (formData.Password.includes(formData.username)) {
-      validationErrors.Password = "Username should not be used as a password.";
-    }
-    if (formData.Email.length > 1 && formData.Email.length < 10) {
-      validationErrors.Email = "Please enter correct E-mail id";
-    }
-    if (formData.Email.length < 1) {
-      validationErrors.Email = "Please enter your Email for future updates.";
-    }
+    // if (formData.Password.includes(formData.username)) {
+    //   validationErrors.Password = "Username should not be used as a password.";
+    // }
+    // if (formData.Email.length > 1 && formData.Email.length < 10) {
+    //   validationErrors.Email = "Please enter correct E-mail id";
+    // }
+    // if (formData.Email.length < 1) {
+    //   validationErrors.Email = "Please enter your Email for future updates.";
+    // }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
 
-      //   console.log(validationErrors)
-      // setShouldSignup(false);
-    } else {
-      setErrors(validationErrors);
-    }
+    //   //   console.log(validationErrors)
+    //   // setShouldSignup(false);
+    // } else {
+    //   setErrors(validationErrors);
+    // }
   };
   const isFormValid = () => {
     // Check if there are any errors in the errors state
@@ -79,6 +79,7 @@ function LoginPage() {
     // setActiveStep(2)
     // Convert form data to JSON
     // const jsonData = JSON.stringify(formData, null, 2);
+    setErrors({});
     const validationErrors = {};
 
     if (!formData.Email) {
@@ -89,14 +90,17 @@ function LoginPage() {
       validationErrors.Password = "Password is required.";
     }
 
-    if (formData.Password.includes(formData.username)) {
-      validationErrors.Password = "Username should not be used as a password.";
-    }
+    // if (formData.Password.includes(formData.username)) {
+    //   validationErrors.Password = "Username should not be used as a password.";
+    // }
     if (formData.Email.length > 1 && formData.Email.length < 10) {
       validationErrors.Email = "Please enter correct E-mail id";
     }
     if (formData.Email.length < 1) {
       validationErrors.Email = "Please enter your Email for future updates.";
+    }
+    if (formData.Password.length <= 1) {
+      validationErrors.Password = "Please enter correct password";
     }
 
     if (Object.keys(validationErrors).length > 0) {
@@ -113,65 +117,67 @@ function LoginPage() {
     // Convert form data to JSON
     const jsonDataFinal = JSON.stringify(formData, null, 2);
     // console.log("String form Data Final", jsonDataFinal);
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonDataFinal,
-      });
-      // console.log(response.body);
-      if (response.status === 201) {
-  // Parse the JSON response and extract the token
-  const responseData = await response.json();
-  const token = responseData.token;
-
-        localStorage.setItem("token", token)
-        setSubmitted(true);
-       
-
-        toast.success("🎉 Signed In successfully! Redirecting 🤗", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+    // console.log(Object.keys(validationErrors).length)
+    if (Object.keys(validationErrors).length == 0) {
+      try {
+        console.log("Logging in");
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonDataFinal,
         });
-        setLoggedIn(true);
-        setTimeout(() => {
+        // console.log(response.body);
+        if (response.status === 201) {
+          // Parse the JSON response and extract the token
+          const responseData = await response.json();
+          const token = responseData.token;
 
+          localStorage.setItem("token", token);
+          setSubmitted(true);
+
+          toast.success("🎉 Signed In successfully! Redirecting 🤗", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setLoggedIn(true);
+          setTimeout(() => {
             router.push("/dishes");
-        }, 3000);
+          }, 3000);
 
-        login();
-        setFormData({
-          Email: "",
-          Password: "",
-        });
-      } else {
-        console.error("Form submission failed");
-        toast.error("👹 User Not Found!", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        setFormData({
-          Email: "",
-          Password: "",
-        });
-        setIsChecked({ checked: false });
+          login();
+          setFormData({
+            Email: "",
+            Password: "",
+          });
+        } else {
+          console.error("Form submission failed");
+          toast.error("👹 User Not Found!", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setFormData({
+            Email: "",
+            Password: "",
+          });
+          setIsChecked({ checked: false });
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
     //  console.log(formData);
   };
@@ -194,7 +200,7 @@ function LoginPage() {
         <Image
           src="/logo.png"
           alt="Logo"
-          className="mx-auto mb-4"
+          className="mx-auto mb-4 "
           height={100}
           width={100}
         />
@@ -212,7 +218,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlhtmlFor="Email"
+              htmlFor="Email"
             >
               Email
             </label>
@@ -236,7 +242,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlhtmlFor="password"
+              htmlFor="password"
             >
               Password
             </label>
@@ -268,7 +274,7 @@ function LoginPage() {
                 onChange={handleCheckboxChange}
               />
               <label
-                htmlhtmlFor="remember-me"
+                htmlFor="remember-me"
                 className="ml-2 text-xs sm:text-sm text-gray-700"
               >
                 Remember me
@@ -284,10 +290,10 @@ function LoginPage() {
 
           <button
             className={`bg-gradient-to-r from-violet-500 to-pink-500  hover:bg-indigo-700 w-full mt-4 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ${
-              isFormValid() ? "" : "disabled cursor-not-allowed"
+              isFormValid() ? "" : ""
             }`}
             type="submit"
-            disabled={!isFormValid()}
+            // disabled={!isFormValid()}
           >
             {submitted ? "Signed In" : "Sign In"}
           </button>

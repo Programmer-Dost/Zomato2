@@ -36,43 +36,43 @@ function LoginPage() {
     }));
 
     //Validation Logic Here
-    const validationErrors = {};
+    // const validationErrors = {};
 
-    if (!formData.username) {
-      validationErrors.username = "Username is required.";
-    }
-    if (!formData.ContactNumber) {
-      validationErrors.ContactNumber = "Please enter your Contact Number.";
-    }
-    if (!formData.Email) {
-      validationErrors.Email = "Please enter your Email for future updates.";
-    }
-    if (!formData.Address) {
-      validationErrors.Address = "Address is required for delivery.";
-    }
+    // if (!formData.username) {
+    //   validationErrors.username = "Username is required.";
+    // }
+    // if (!formData.ContactNumber) {
+    //   validationErrors.ContactNumber = "Please enter your Contact Number.";
+    // }
+    // if (!formData.Email) {
+    //   validationErrors.Email = "Please enter your Email for future updates.";
+    // }
+    // if (!formData.Address) {
+    //   validationErrors.Address = "Address is required for delivery.";
+    // }
 
-    if (!formData.Password) {
-      validationErrors.Password = "Password is required.";
-    }
+    // if (!formData.Password) {
+    //   validationErrors.Password = "Password is required.";
+    // }
 
-    if (formData.Password.includes(formData.username)) {
-      validationErrors.Password = "Username should not be used as a password.";
-    }
-    if (formData.Email.length > 1 && formData.Email.length < 10) {
-      validationErrors.Email = "Please enter correct E-mail id";
-    }
-    if (formData.Email.length <= 1) {
-      validationErrors.Email = "Please enter your Email for future updates.";
-    }
-    if (formData.ContactNumber.length < 10 || formData.ContactNumber.length > 10) {
-      validationErrors.ContactNumber = "Please enter correct Contact Number";
-    }
+    // if (formData.Password.includes(formData.username)) {
+    //   validationErrors.Password = "Username should not be used as a password.";
+    // }
+    // if (formData.Email.length > 1 && formData.Email.length < 10) {
+    //   validationErrors.Email = "Please enter correct E-mail id";
+    // }
+    // if (formData.Email.length <= 1) {
+    //   validationErrors.Email = "Please enter your Email for future updates.";
+    // }
+    // if (formData.ContactNumber.length < 10 || formData.ContactNumber.length > 10) {
+    //   validationErrors.ContactNumber = "Please enter correct Contact Number";
+    // }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors(validationErrors);
-    }
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
+    // } else {
+    //   setErrors(validationErrors);
+    // }
   };
   const isFormValid = () => {
     // Check if there are any errors in the errors state
@@ -81,6 +81,8 @@ function LoginPage() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setErrors({})
     const validationErrors = {};
 
     if (!formData.username) {
@@ -111,8 +113,8 @@ function LoginPage() {
     }
     if (
       formData.ContactNumber.length > 0 &&
-      formData.ContactNumber.length < 10 &&
-      formData.ContactNumber.length > 10
+      formData.ContactNumber.length < 10 ||
+      formData.ContactNumber.length > 10 || formData.ContactNumber.length < 0
     ) {
       validationErrors.ContactNumber = "Please enter correct Contact Number";
     }
@@ -131,6 +133,7 @@ function LoginPage() {
     // Convert form data to JSON
     const jsonDataFinal = JSON.stringify(formData, null, 2);
     // console.log("String form Data Final", jsonDataFinal);
+    if (Object.keys(validationErrors).length == 0) {
     try {
       const response = await fetch("/api/signup", {
         method: "POST",
@@ -168,7 +171,7 @@ function LoginPage() {
       }
     } catch (error) {
       console.error("Error:", error);
-    }
+    }}
   };
 
   return (
@@ -225,7 +228,7 @@ function LoginPage() {
               </h1>
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlhtmlFor="username"
+                htmlFor="username"
               >
                 Username
               </label>
@@ -245,7 +248,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlhtmlFor="Email"
+                htmlFor="Email"
               >
                 Email
               </label>
@@ -265,7 +268,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlhtmlFor="password"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -285,7 +288,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlhtmlFor="contactNumber"
+                htmlFor="contactNumber"
               >
                 Contact Number
               </label>
@@ -307,7 +310,7 @@ function LoginPage() {
             <div className="mb-6">
               <label
                 className="block text-gray-500 font-bold mb-2"
-                htmlhtmlFor="Address"
+                htmlFor="Address"
               >
                 Address
               </label>
@@ -334,7 +337,7 @@ function LoginPage() {
                   onChange={handleCheckboxChange}
                 />
                 <label
-                  htmlhtmlFor="remember-me"
+                  htmlFor="remember-me"
                   className="ml-2 text-sm text-gray-700 mb-2 "
                 >
                   Remember me
@@ -344,10 +347,10 @@ function LoginPage() {
 
             <button
               className={`bg-gradient-to-r from-violet-500 to-pink-500  hover:bg-indigo-700 w-full mt-4 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ${
-                isFormValid() ? "" : "disabled cursor-not-allowed"
+                isFormValid() ? "" : ""
               }`}
               type="submit"
-              disabled={!isFormValid()}
+              // disabled={!isFormValid()}
             >
               {submitted ? "User Created" : "Sign Up"}
             </button>

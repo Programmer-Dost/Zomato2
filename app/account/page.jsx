@@ -2,7 +2,7 @@
 import React from "react";
 import { UserContext } from "../Context/UserProvider";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import "../globals.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -194,7 +194,7 @@ function Page() {
   //         console.log("user", user);
   //       }
   //   }, 5000);
-  async function getRestaurant() {
+  const getRestaurant = useCallback(async() =>{
     try {
       if (userData._id) {
         // console.log("user ID found", userData._id);
@@ -228,7 +228,7 @@ function Page() {
     } catch (e) {
       console.log("Error", e.message);
     }
-  }
+  },[userData._id])
   useEffect(() => {
     if (contextLoading == false) {
       if (loggedIn) {
@@ -242,7 +242,7 @@ function Page() {
         router.push("/login");
       }
     }
-  }, [loggedIn, userData, submitted, contextLoading, router]);
+  }, [loggedIn, userData, submitted, contextLoading, getRestaurant, router]);
   function editInfo() {
     SetToggleEdit(!toggleEdit);
   }
@@ -332,7 +332,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlhtmlFor="username"
+                    htmlFor="username"
                   >
                     Username
                   </label>
@@ -354,7 +354,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlhtmlFor="Email"
+                    htmlFor="Email"
                   >
                     Email
                   </label>
@@ -376,7 +376,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlhtmlFor="password"
+                    htmlFor="password"
                   >
                     New Password
                   </label>
@@ -398,7 +398,7 @@ function Page() {
                 <div className=" mx-2">
                   <label
                     className="block text-gray-500 font-bold mb-2"
-                    htmlhtmlFor="contactNumber"
+                    htmlFor="contactNumber"
                   >
                     Contact Number
                   </label>
@@ -428,7 +428,7 @@ function Page() {
               <div className="mb-6 mx-2">
                 <label
                   className="block text-gray-500 font-bold mb-2"
-                  htmlhtmlFor="Address"
+                  htmlFor="Address"
                 >
                   Address
                 </label>

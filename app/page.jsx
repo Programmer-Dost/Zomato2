@@ -34,7 +34,7 @@ export default function Home() {
             <div className="flex w-full md:justify-start justify-center items-end">
               <div className="relative mr-4 lg:w-full xl:w-1/2 w-2/4">
                 <label
-                  htmlhtmlFor="hero-field"
+                  htmlFor="hero-field"
                   className="leading-7 text-xs sm:text-sm sm:mr-52 md:mr-0 text-gray-600 "
                 >
                   {` Starving for?`}

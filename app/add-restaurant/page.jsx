@@ -203,7 +203,7 @@ function CreateRestaurant() {
                 >
                   <div className="relative mb-4">
                     <label
-                      htmlhtmlFor="name"
+                      htmlFor="name"
                       className="leading-7 text-sm block text-gray-700 font-bold mb-2"
                     >
                       Restaurant Name
@@ -262,7 +262,7 @@ function CreateRestaurant() {
                   </div>
                   <div className="relative mb-4">
                     <label
-                      htmlhtmlFor="name"
+                      htmlFor="name"
                       className="leading-7 text-sm block text-gray-700 font-bold mb-2"
                     >
                       Restaurant Address

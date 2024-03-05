@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 var jwt = require("jsonwebtoken");
 const UserContext = React.createContext({
   loggedIn: true,
@@ -27,7 +27,11 @@ const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [countAgain, setCountAgain] = useState(0);
   const [cartData, setcartData] = useState(0);
-  async function getUser(token) {
+
+
+
+
+  const getUser = useCallback(async(token)=> {
     // if (loggedIn) {
     if (token) {
       setUser({ value: token });
@@ -45,8 +49,8 @@ const UserProvider = ({ children }) => {
       logout()
       setContextLoading(false);
     }
-  }
-  async function loginUser(decodedToken) {
+  }, [])
+  const loginUser = useCallback(async(decodedToken) =>  {
     try {
       if (decodedToken) {
         // console.log("token found", decodedToken.Email);
@@ -81,7 +85,7 @@ const UserProvider = ({ children }) => {
     } catch (e) {
       console.log("Error", e.message);
     }
-  }
+  },[])
   // async function verifyToken(decodedToken) {
   //   if (decodedToken) {
   //     if (decodedToken.Email) {
@@ -106,7 +110,8 @@ const UserProvider = ({ children }) => {
   //     }
   //   }
   // }
-
+//   const stableLoginUser = useCallback(loginUser, []);
+// const stableGetUser = useCallback(getUser, []);
   useEffect(() => {
     if (window !== undefined) {
       const token = localStorage.getItem("token");
@@ -128,7 +133,7 @@ const UserProvider = ({ children }) => {
         loginUser(user);
       });
     }
-  }, [loggedIn, adminloggedIn]);
+  }, [loggedIn, adminloggedIn, loginUser, getUser]);
   useEffect(() => {
     // console.log("cart")
     let keys = Object.keys(JSON.parse(localStorage.getItem("cart")) || {});
@@ -145,12 +150,12 @@ const UserProvider = ({ children }) => {
     //  setcartData(cartDataLength);
   }, [countAgain]);
 
-  const login = () => {
+  const login = useCallback(() => {
     if (user.value) {
       setLoggedIn(true);
       // console.log("Token exists, user logged in");
     }
-  };
+  },[user.value]);
   const adminlogin = () => {
     if (admin.value != null) {
       setAdminLoggedIn(true);

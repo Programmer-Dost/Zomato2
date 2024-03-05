@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Stripe from "stripe";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../Context/UserProvider";
@@ -21,7 +21,7 @@ const Page = () => {
 
   // }, 3000);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const userId = userData._id;
     if (typeof window !== "undefined") {
       const urlParams = new URLSearchParams(window.location.search);
@@ -144,7 +144,7 @@ const Page = () => {
         }
       }
     }
-  };
+  },[router, stripe.charges, stripe.checkout.sessions, stripe.paymentIntents, userData._id]);
 
   // async function getUser() {
   //   // if (loggedIn) {
@@ -198,7 +198,7 @@ const Page = () => {
     //  })
 
     // cs_test_a1sBkOnJyyCv9FfZt5rogyFokDMk60s6SSVyrogePJGRyVE8u8I1c1vA2Y
-  }, [loggedIn, contextLoading, userData, router]);
+  }, [loggedIn, contextLoading, userData, fetchData, router]);
 
   // console.log({userId}, "from useEffect")
 

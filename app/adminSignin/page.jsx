@@ -10,9 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../Context/UserProvider";
 function LoginPage() {
-  const {setAdminLoggedIn } = React.useContext(UserContext);
+  const { setAdminLoggedIn } = React.useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState({ username: "Username is required" });
+  const [errors, setErrors] = useState({ });
 
   const [isChecked, setIsChecked] = useState({ checked: false });
   const [formData, setFormData] = useState({
@@ -40,39 +40,39 @@ function LoginPage() {
       [name]: value,
     }));
     //Validation Logic Here
-    const validationErrors = {};
+    // const validationErrors = {};
 
-    if (!formData.Email) {
-      validationErrors.Email = "Please enter your Email for future updates.";
-    }
+    // if (!formData.Email) {
+    //   validationErrors.Email = "Please enter your Email for future updates.";
+    // }
 
-    if (!formData.Password) {
-      validationErrors.Password = "Password is required.";
-    }
+    // if (!formData.Password) {
+    //   validationErrors.Password = "Password is required.";
+    // }
 
-    if (formData.Password.includes(formData.username)) {
-      validationErrors.Password = "Username should not be used as a password.";
-    }
-    if (formData.Email.length > 1 && formData.Email.length < 10) {
-      validationErrors.Email = "Please enter correct E-mail id";
-    }
-    if (formData.Email.length < 1) {
-      validationErrors.Email = "Please enter your Email for future updates.";
-    }
+    // if (formData.Password.includes(formData.username)) {
+    //   validationErrors.Password = "Username should not be used as a password.";
+    // }
+    // if (formData.Email.length > 1 && formData.Email.length < 10) {
+    //   validationErrors.Email = "Please enter correct E-mail id";
+    // }
+    // if (formData.Email.length < 1) {
+    //   validationErrors.Email = "Please enter your Email for future updates.";
+    // }
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
 
-      //   console.log(validationErrors)
-      // setShouldSignup(false);
-    } else {
-      setErrors(validationErrors);
-    }
+    //   //   console.log(validationErrors)
+    //   // setShouldSignup(false);
+    // } else {
+    //   setErrors(validationErrors);
+    // }
   };
-  const isFormValid = () => {
-    // Check if there are any errors in the errors state
-    return Object.values(errors).every((error) => error === "");
-  };
+  // const isFormValid = () => {
+  //   // Check if there are any errors in the errors state
+  //   return Object.values(errors).every((error) => error === "");
+  // };
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,6 +80,7 @@ function LoginPage() {
     // setActiveStep(2)
     // Convert form data to JSON
     // const jsonData = JSON.stringify(formData, null, 2);
+    setErrors({})
     const validationErrors = {};
 
     if (!formData.Email) {
@@ -102,7 +103,7 @@ function LoginPage() {
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
-    } 
+    }
 
     //     {  "username": "Abhi",
     //     "ContactNumber": 679234567890,
@@ -115,69 +116,70 @@ function LoginPage() {
     // Convert form data to JSON
     const jsonDataFinal = JSON.stringify(formData, null, 2);
     // console.log("String form Data Final", jsonDataFinal);
-    try {
-      const response = await fetch("/api/admin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: jsonDataFinal,
-      });
-      // console.log(response.body);
-      if (response.status === 201) {
-  // Parse the JSON response and extract the token
-  const responseData = await response.json();
-  const token = responseData.token;
-
-  // Use the extracted token for further processing
-  // console.log("Token:", token);
-//  const token =  response.cookies.get("token")
-        localStorage.setItem("adminToken", token)
-        setSubmitted(true);
-        // console.log("Form data submitted successfully", formData);
-        setAdminLoggedIn(true);
-  //  adminlogin()
-        // setAdminEmail(formData.Email)
-        
-        toast.success("🎉 Signed In successfully! Redirecting 🤗", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+    if (Object.keys(validationErrors).length == 0) {
+      try {
+        const response = await fetch("/api/admin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonDataFinal,
         });
-        setTimeout(() => {
+        // console.log(response.body);
+        if (response.status === 201) {
+          // Parse the JSON response and extract the token
+          const responseData = await response.json();
+          const token = responseData.token;
 
+          // Use the extracted token for further processing
+          // console.log("Token:", token);
+          //  const token =  response.cookies.get("token")
+          localStorage.setItem("adminToken", token);
+          setSubmitted(true);
+          // console.log("Form data submitted successfully", formData);
+          setAdminLoggedIn(true);
+          //  adminlogin()
+          // setAdminEmail(formData.Email)
+
+          toast.success("🎉 Signed In successfully! Redirecting 🤗", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setTimeout(() => {
             router.push("/admin");
-        }, 3000);
+          }, 3000);
 
-        setFormData({
-          Email: "",
-          Password: "",
-        });
-      } else {
-        console.error("Form submission failed");
-        toast.error("👹 Admin Not Found!", {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        setFormData({
-          Email: "",
-          Password: "",
-        });
-        setIsChecked({ checked: false });
+          setFormData({
+            Email: "",
+            Password: "",
+          });
+        } else {
+          console.error("Form submission failed");
+          toast.error("👹 Admin Not Found!", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setFormData({
+            Email: "",
+            Password: "",
+          });
+          setIsChecked({ checked: false });
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
     //  console.log(formData);
   };
@@ -218,7 +220,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlhtmlFor="Email"
+              htmlFor="Email"
             >
               Email
             </label>
@@ -242,7 +244,7 @@ function LoginPage() {
           <div className="mb-6">
             <label
               className="block text-gray-700 font-bold mb-2"
-              htmlhtmlFor="password"
+              htmlFor="password"
             >
               Password
             </label>
@@ -274,7 +276,7 @@ function LoginPage() {
                 onChange={handleCheckboxChange}
               />
               <label
-                htmlhtmlFor="remember-me"
+                htmlFor="remember-me"
                 className="ml-2 text-sm text-gray-700"
               >
                 Remember me
@@ -289,11 +291,9 @@ function LoginPage() {
           </div>
 
           <button
-            className={`bg-gradient-to-r from-violet-500 to-pink-500  hover:bg-indigo-700 w-full mt-4 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline ${
-              isFormValid() ? "" : "disabled cursor-not-allowed"
-            }`}
+            className={`bg-gradient-to-r from-violet-500 to-pink-500  hover:bg-indigo-700 w-full mt-4 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline `}
             type="submit"
-            disabled={!isFormValid()}
+            // disabled={!isFormValid()}
           >
             {submitted ? "Signed In" : "Sign In"}
           </button>
@@ -301,11 +301,7 @@ function LoginPage() {
         <div className="text-center">
           <p className="text-gray-500 text-xs">
             {`Don't`} have an account?
-            <span
-              className="ml-1 text-blue-500"
-            >
-              Contact Developer
-            </span>
+            <span className="ml-1 text-blue-500">Contact Developer</span>
           </p>
         </div>
         <p className="text-center text-gray-500 text-xs">

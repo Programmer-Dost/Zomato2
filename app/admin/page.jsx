@@ -9,7 +9,7 @@ function Page() {
   const [orders, setOrders] = useState([]);
   const [counter, setCounter] = useState(0);
   const [selectedStatus, setSelectedStatus] = useState({});
-  const { contextLoading, adminloggedIn, adminlogin, adminlogout} =
+  const { contextLoading, adminloggedIn, adminlogout} =
     React.useContext(UserContext);
   const router = useRouter();
   const handleChange = (event, order) => {
@@ -91,7 +91,7 @@ function Page() {
     //  })
 
     // cs_test_a1sBkOnJyyCv9FfZt5rogyFokDMk60s6SSVyrogePJGRyVE8u8I1c1vA2Y
-  }, [adminloggedIn, contextLoading, selectedStatus, counter, adminlogin, router]);
+  }, [adminloggedIn, contextLoading, selectedStatus, counter, router]);
 
   return (
     <div>
